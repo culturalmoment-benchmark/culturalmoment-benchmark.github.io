@@ -161,6 +161,49 @@
 }
 .mode-chip b { color: var(--cmb-navy); }
 
+/* walkthrough stills */
+.tile-still { display: block; width: 100%; height: auto; }
+.wt-strip { display: block; width: 100%; max-width: 640px; margin: 0 auto 0.6rem; border-radius: 4px; }
+
+/* key findings cards */
+.fk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.9rem;
+  text-align: left;
+}
+.fk-card {
+  border: 1px solid var(--cmb-line);
+  border-top: 3px solid var(--cmb-navy);
+  border-radius: 8px;
+  padding: 1rem 1.1rem 1.1rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.fk-num {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--cmb-navy);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.fk-num .fk-vs { font-size: 0.95rem; font-weight: 600; color: #8a8f99; }
+.fk-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6a6f7a;
+  margin: 0;
+}
+.fk-text { font-size: 0.9rem; margin: 0.2rem 0 0; }
+
+/* Table 1 ours row */
+.t1-ours td { background: var(--cmb-soft) !important; }
+
 /* findings */
 .findings-list { counter-reset: finding; list-style: none; margin-left: 0 !important; max-width: 760px; margin: 0 auto; }
 .findings-list > li {
