@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Cultural Moment Benchmark (EMNLP 2026): 306 expert-curated cultural concepts from 7 Southeast Asian countries, probed in three stages: naming, visual recognition on video, and temporal localization. Leaderboard for six VLMs under Reset, Carry, and Feedback modes.">
+  <meta name="keywords" content="Cultural Moment Benchmark, CMB, Video Understanding, Cultural Reasoning, Temporal Localization, Southeast Asia, VLM, EMNLP 2026">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia</title>
+
+  <link rel="canonical" href="https://culturalmoment-benchmark.github.io/">
+  <meta property="og:title" content="Cultural Moment Benchmark">
+  <meta property="og:description" content="EMNLP 2026 benchmark: naming, visual recognition, and temporal localization of Southeast Asian cultural concepts in video, scored per ability under three context modes.">
+  <meta property="og:url" content="https://culturalmoment-benchmark.github.io/">
+  <meta property="og:image" content="https://culturalmoment-benchmark.github.io/static/images/og-teaser.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cultural Moment Benchmark">
+  <meta name="twitter:description" content="Video cultural reasoning and grounding in Southeast Asia: three abilities, three stages, three modes. 306 expert-curated concepts, 624 videos, six VLMs evaluated.">
+  <meta name="twitter:image" content="https://culturalmoment-benchmark.github.io/static/images/og-teaser.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Cultural Moment Benchmark",
+    "alternateName": "CMB",
+    "description": "A video benchmark for cultural understanding in Southeast Asia: 306 expert-curated concepts from seven countries across five categories, evaluated in three stages (naming, visual recognition, temporal localization) under three context modes (Reset, Carry, Feedback). Humans produce all visual ground truth; the release references source videos by YouTube ID and does not redistribute video bytes. Published at EMNLP 2026.",
+    "url": "https://culturalmoment-benchmark.github.io/",
+    "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "isAccessibleForFree": true,
+    "keywords": ["vision-language models", "video understanding", "cultural reasoning", "temporal localization", "Southeast Asia", "benchmark"],
+    "creator": [
+      {"@type": "Person", "name": "Burak Satar", "url": "https://buraksatar.github.io/"},
+      {"@type": "Person", "name": "Zhixin Ma"},
+      {"@type": "Person", "name": "Cheng Yu-Tong"},
+      {"@type": "Person", "name": "Huy Hoang Tran"},
+      {"@type": "Person", "name": "Phuong Anh Nguyen"},
+      {"@type": "Person", "name": "Chong-Wah Ngo"}
+    ]
+  }
+  </script>
+
+  <link rel="icon" href="./static/images/favicon.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+  <link rel="stylesheet" href="./static/css/cmb.css">
+
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./data/leaderboard.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="./">
+      <img src="static/images/logo_strip.png" alt="Cultural Moment Benchmark logo" style="max-height: 1.9rem;">
+      <b>&nbsp;Cultural Moment</b>
+    </a>
+    <a role="button" class="navbar-burger" id="cmb-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu" id="cmb-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#what-is">Benchmark</a>
+      <a class="navbar-item" href="#walkthrough">Walkthrough</a>
+      <a class="navbar-item" href="#findings">Findings</a>
+      <a class="navbar-item" href="#leaderboard">Leaderboard</a>
+      <a class="navbar-item" href="#dataset">Dataset</a>
+      <a class="navbar-item" href="#submit">Submit</a>
+      <a class="navbar-item" href="#news">News</a>
+      <a class="navbar-item" href="#BibTeX">BibTeX</a>
+    </div>
+    <div class="navbar-end" style="align-items: center; padding-right: 0.75rem;">
+      <a class="navbar-item" href="https://seeingculture-benchmark.github.io/" title="Seeing Culture Benchmark, the image-based precursor of CMB">
+        <span class="series-pill">SCB · image benchmark <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <img src="static/images/logo_strip.png" alt="Southeast Asia film strip logo" style="max-height: 4.2rem; margin-bottom: 0.5rem;"/>
+          <h1 class="title is-1 publication-title is-bold">
+            Cultural Moment Benchmark
+          </h1>
+          <h2 class="subtitle is-3 publication-subtitle">
+            Evaluating Video Cultural Reasoning and Grounding in Southeast Asia
+          </h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://buraksatar.github.io/">Burak Satar</a><sup style="color:#6fbf73;">1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zhixinma.github.io/">Zhixin Ma</a><sup style="color:#6fbf73;">1</sup>,
+            </span>
+            <span class="author-block">
+              Cheng Yu-Tong<sup style="color:#6fbf73;">1</sup>,
+            </span>
+            <span class="author-block">
+              Huy Hoang Tran<sup style="color:#ed4b82;">2</sup>,
+            </span><br>
+            <span class="author-block">
+              Phuong Anh Nguyen<sup style="color:#6fbf73;">1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=HM39HrUAAAAJ">Chong-Wah Ngo</a><sup style="color:#6fbf73;">1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup style="color:#6fbf73;">1</sup>Singapore Management University,</span>
+            <span class="author-block"><sup style="color:#ed4b82;">2</sup>UIT, VNU-HCM</span><br>
+            <span class="paper-block"><b style="color:#f41c1c">EMNLP 2026 Main Conference</b> (15.4% acceptance rate)</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="static/pdf/CMB_camera_ready.pdf"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- TODO: uncomment when the arXiv version is live
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/XXXX.XXXXX"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              -->
+              <!-- TODO: uncomment when the evaluation code is public
+              <span class="link-block">
+                <a href="https://github.com/culturalmoment-benchmark"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              -->
+              <!-- TODO: uncomment when the public sample is on HuggingFace
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/Multimedia-SMU/cultural-moment-benchmark"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><p style="font-size:18px">&#129303;</p></span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+              -->
+              <span class="link-block">
+                <a href="#leaderboard"
+                  class="button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-trophy"></i></span>
+                  <span>Leaderboard</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#BibTeX"
+                  class="button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="what-is">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3">What is the Cultural Moment Benchmark?</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li><b>The idea:</b> cultural understanding in video is not one ability but three: <b>naming</b> what a concept symbolizes, <b>visually recognizing</b> it on video, and <b>locating its sub-events in time</b>. CMB scores each ability separately, so a single aggregate can no longer hide the bottleneck.</li>
+            <li><b>The task:</b> every concept runs through three stages. Stage 1 picks the concept name from four candidates given a symbolic description. Stage 2 picks among four unlabeled video moments for the same description. Stage 3 predicts free-form start and end times of a target sub-event on a different video. Each stage runs under three context modes: Reset, Carry, and Feedback.</li>
+            <li><b>Why it matters:</b> even the strongest closed-source models get fewer than 30% of concepts right across all three stages, open-source models score in single digits, and a 14-rater human study shows the required knowledge is country-specific, not regional.</li>
+          </ul>
+        </div>
+        <div class="columns is-multiline is-mobile has-text-centered cmb-stats" style="margin-top: 1rem;">
+          <div class="column is-2-desktop is-4-mobile"><p class="title is-3">306</p><p class="heading">Expert-curated concepts</p></div>
+          <div class="column is-2-desktop is-4-mobile"><p class="title is-3">7</p><p class="heading">SEA countries</p></div>
+          <div class="column is-2-desktop is-4-mobile"><p class="title is-3">5</p><p class="heading">Categories</p></div>
+          <div class="column is-2-desktop is-4-mobile"><p class="title is-3">624</p><p class="heading">Source videos</p></div>
+          <div class="column is-2-desktop is-4-mobile"><p class="title is-3">3&times;3</p><p class="heading">Stages &times; modes</p></div>
+          <div class="column is-2-desktop is-4-mobile"><p class="title is-3">14</p><p class="heading">Human raters</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3">Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia</h2>
+        <div class="content has-text-justified">
+          <div class="content has-text-centered">
+            <img src="static/images/fig1_teaser.png" style="width: 100%; max-width: 560px;" alt="CMB three-stage probe of one cultural concept: naming, visual recognition, temporal localization"/>
+            <p class="is-size-6 has-text-grey">
+              One concept, three probes: Stage 1 names it, Stage 2 recognizes it among unlabeled video moments, Stage 3 localizes its sub-event on a different video.
+            </p>
+          </div>
+          <h2 class="title is-3">Abstract</h2>
+          <p>
+            Cultural understanding in video means more than recognizing what is visible; it requires grasping the symbolic and temporal significance of cultural concepts. We decompose this into three abilities: naming what a concept symbolizes, visually recognizing it on video, and locating its sub-events in time. Existing video-cultural benchmarks tend to test what is seen, collapsing these three abilities into a single score that hides the bottleneck. We introduce the <b>Cultural Moment Benchmark (CMB)</b>: 306 expert-curated concepts from seven countries in Southeast Asia across five categories. We evaluate each concept through three stages, one per ability. Given a description, <b>Stage 1</b> (S1) selects from four candidate concept names, <b>Stage 2</b> (S2) selects from four candidate video moments, and <b>Stage 3</b> (S3) predicts the start and end times of the moment in a video. To keep each stage focused on a distinct ability, we use three design choices: semantic-similarity distractors (S1, S2), unlabeled video moments (S2), and free-form localization on a different example video (S3).
+            Across six vision-language models, the failure mode varies by ability and modality. i) Even the strongest closed-source models score below 30% when all three stages must be correct; ii) Across stages, the three abilities do not fully cascade: naming a concept correctly helps half the models recognize it on video, but recognizing it has little effect on locating the sub-event in time; iii) Audio is complementary, redundant, or distracting depending on the concept, more often distracting in countries with non-Latin scripts; removing both audio and subtitles hurts Games and Music the most. Separately, our 14-rater human study shows that even <i>Expert</i> raters score below chance on concepts from a neighboring country, indicating that CMB requires country-specific cultural knowledge. CMB acts as a diagnostic harness, attributing failures to a specific ability or modality rather than aggregating them into a single score.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="walkthrough">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3">The Three-Stage Probe, Hands On</h2>
+        <div class="content has-text-justified">
+          <p class="has-text-centered">
+            Try the published example concept: <b>Nyepi</b> / Celebration / Indonesia. Pick an answer in Stage 1 and Stage 2 to reveal the ground truth.
+          </p>
+          <div class="walkthrough">
+            <div class="tabs is-centered is-medium">
+              <ul>
+                <li class="is-active" data-wt="wt-s1"><a><b>Stage 1</b>&nbsp;Naming</a></li>
+                <li data-wt="wt-s2"><a><b>Stage 2</b>&nbsp;Visual recognition</a></li>
+                <li data-wt="wt-s3"><a><b>Stage 3</b>&nbsp;Temporal localization</a></li>
+              </ul>
+            </div>
+
+            <div class="wt-panel is-active" id="wt-s1">
+              <p class="wt-note">Given a symbolic description, select the concept name. Distractors are drawn by semantic similarity: one from the same country, two from neighbors.</p>
+              <div class="wt-question">Which option represents the cultural concept that transitions from communal chaos to unified tranquility for universal equilibrium?</div>
+              <div class="wt-options" id="wt-s1-options">
+                <button class="wt-option" data-ok="0"><span class="opt-letter">A</span> Songkran (Thailand)</button>
+                <button class="wt-option" data-ok="1"><span class="opt-letter">B</span> Nyepi (Indonesia)</button>
+                <button class="wt-option" data-ok="0"><span class="opt-letter">C</span> Waisak (Indonesia)</button>
+                <button class="wt-option" data-ok="0"><span class="opt-letter">D</span> Thimithi (Malaysia)</button>
+              </div>
+              <p class="wt-hint">A question answerable by generic object recognition is rejected at construction: the description captures what the concept symbolizes, not what is visible.</p>
+            </div>
+
+            <div class="wt-panel" id="wt-s2">
+              <p class="wt-note">Same description, but the options are now four unlabeled video moments from Set A. An independent random seed reshuffles the positions, so Stage 1 leaks nothing.</p>
+              <div class="wt-grid" id="wt-s2-options">
+                <button class="wt-tile" data-ok="0">
+                  <span class="tile-label"><b>A</b>&nbsp;Waisak (Indonesia)</span>
+                  <span class="tile-frame"><span class="icon"><i class="fas fa-film"></i></span><span>video moment</span></span>
+                </button>
+                <button class="wt-tile" data-ok="0">
+                  <span class="tile-label"><b>B</b>&nbsp;Songkran (Thailand)</span>
+                  <span class="tile-frame"><span class="icon"><i class="fas fa-film"></i></span><span>video moment</span></span>
+                </button>
+                <button class="wt-tile" data-ok="1">
+                  <span class="tile-label"><b>C</b>&nbsp;Nyepi (Indonesia)</span>
+                  <span class="tile-frame"><span class="icon"><i class="fas fa-film"></i></span><span>video moment</span></span>
+                </button>
+                <button class="wt-tile" data-ok="0">
+                  <span class="tile-label"><b>D</b>&nbsp;Thimithi (Malaysia)</span>
+                  <span class="tile-frame"><span class="icon"><i class="fas fa-film"></i></span><span>video moment</span></span>
+                </button>
+              </div>
+              <p class="wt-hint">In the evaluation, models see the actual moments with no textual labels; the country names above are shown here for illustration only. Playable moments arrive with the public sample release on HuggingFace.</p>
+            </div>
+
+            <div class="wt-panel" id="wt-s3">
+              <p class="wt-note">A different video of the same concept (Set B), so within-clip recall from Stage 2 cannot help. The model predicts a free-form [t<sub>start</sub>, t<sub>end</sub>] span.</p>
+              <div class="wt-question">Locate the moment when the inactivity of Nyepi serves as an active spiritual practice to preserve the island's purity after the purgation rituals.</div>
+              <div class="wt-timeline">
+                <div class="wt-track"><span class="wt-span-gt" title="Human-annotated ground-truth span"></span></div>
+                <div class="wt-track-caption"><span>0:00</span><span>video B, ~6 min on average</span></div>
+                <div class="wt-legend">
+                  <span><span class="key gt"></span>ground truth (human-annotated)</span>
+                  <span><span class="key pred"></span>model prediction</span>
+                </div>
+              </div>
+              <p class="wt-hint">Scored as intersection over union between predicted and ground-truth spans, averaged over the 631 Stage-3 pairs.</p>
+            </div>
+
+            <div class="mode-chips">
+              <div class="mode-chip"><b>Reset</b><br>no prior context between stages</div>
+              <div class="mode-chip"><b>Carry</b><br>the model's own previous answer is carried over</div>
+              <div class="mode-chip"><b>Feedback</b><br>previous answer plus the ground truth</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="findings">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3">Key Findings</h2>
+        <div class="content has-text-justified">
+          <ol class="findings-list">
+            <li><span><b>End-to-end success is low for every model.</b> Even Gemini 3.1 Pro and GPT-5.4, the two strongest models, get fewer than 30% of concepts right across all three stages. The four open-source models score in single digits on the Joint metric, and InternVL-14B is near zero.</span></li>
+            <li><span><b>The three abilities do not fully cascade.</b> Correctly naming a concept helps the strongest models pick the right video moment (about 18 points for Gemini and GPT), but choosing the right moment provides no measurable benefit when predicting a span on a fresh clip. Temporal localization is the floor every model shares, and purpose-built temporal-grounding models do not clear it either: the best specialist reaches 19.3 mIoU overall, versus 33.4 for the best VLM.</span></li>
+            <li><span><b>Prior context helps the strong and hurts the weak.</b> Under Carry and Feedback, Gemini and GPT climb by ten points and more, the Qwen models barely move, and the InternVL configurations lose accuracy.</span></li>
+            <li><span><b>Audio is not uniformly useful.</b> Depending on the concept, audio is complementary, redundant, or distracting. 29% of videos from non-Latin-script countries (Cambodia, Myanmar, Thailand) have audio rated as distracting, versus 14% for Latin-script countries; removing audio and subtitles together hurts Games and Music the most.</span></li>
+            <li><span><b>Cultural knowledge is country-specific, not regional.</b> In the 14-rater human study, Expert raters drop 37 points on S1 for a neighboring country's concepts, landing below the 25% chance level. The knowledge that helps experts at home misleads them abroad.</span></li>
+          </ol>
+          <div class="content has-text-centered" style="margin-top: 1.5rem;">
+            <img src="static/images/fig4_modality.png" style="width: 100%; max-width: 560px;" alt="Modality roles across S3 video pairs by category and writing-system cluster" loading="lazy"/>
+            <p class="is-size-6 has-text-grey">
+              Modality roles across all S3 video pairs: share of videos where removing a modality hurts (complementary) or helps (distracting), by category and writing-system cluster.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="leaderboard-section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3" id="leaderboard">Leaderboard</h2>
+        <div class="content has-text-justified">
+          <p>
+            Zero-shot results of the 3-stage &times; 3-mode evaluation. <b>S1</b> and <b>S2</b> are 4-option multiple-choice accuracy (random guess is 25%). <b>S3</b> is mean IoU of the predicted free-form span over the 631 Stage-3 pairs. <b>Joint</b> credits a concept only when all three abilities line up. <b>R / C / F</b> mark the Reset, Carry, and Feedback context modes; S1 has one column because there is no prior context to carry. Seed results are from Table 2 of <a href="static/pdf/CMB_camera_ready.pdf">the paper</a>; conditional cascade metrics (c-S2, c-mIoU) are in its Table 3. Click a column header to sort.
+          </p>
+          <div class="table-container">
+            <table class="table is-striped is-narrow is-hoverable js-sort-table" id="cmb-leaderboard-table" style="margin-left:auto;margin-right:auto;font-size:0.85rem;">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Group</th>
+                  <th class="js-sort-number">S1</th>
+                  <th class="js-sort-number">S2 R</th><th class="js-sort-number">S2 C</th><th class="js-sort-number">S2 F</th>
+                  <th class="js-sort-number">S3 R</th><th class="js-sort-number">S3 C</th><th class="js-sort-number">S3 F</th>
+                  <th class="js-sort-number">Joint R</th><th class="js-sort-number">Joint C</th><th class="js-sort-number">Joint F</th>
+                  <th>Date</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody id="cmb-leaderboard-body"></tbody>
+            </table>
+          </div>
+          <p class="lb-note has-text-centered">
+            The gap between closed and open models survives cluster-bootstrap resampling; the ordering inside each group does not. Prior context (Carry, Feedback) helps the strongest models and hurts the weakest.
+          </p>
+
+          <h3 class="title is-4" style="margin-top: 2rem;">Specialized temporal-grounding baselines (S3 only)</h3>
+          <p>
+            Do purpose-built temporal-grounding models close the localization gap? Three specialists run Stage 3 with the same textual cue on video B, with no S1 or S2 context (1 fps, 224&times;224; Table 18 of the paper). Even the best of them, at 19.3 mIoU overall, stays about 14 points below the strongest VLM.
+          </p>
+          <div class="table-container">
+            <table class="table is-striped is-narrow" style="margin-left:auto;margin-right:auto;font-size:0.88rem;">
+              <thead>
+                <tr><th>Model</th><th>Celebration</th><th>Dance</th><th>Game</th><th>Music</th><th>Wedding</th><th>Overall mIoU</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><b>MUSEG</b></td><td>22.4</td><td>15.5</td><td>21.6</td><td>26.4</td><td>13.8</td><td><b>19.3</b></td></tr>
+                <tr><td><b>TimeSuite</b></td><td>9.5</td><td>3.9</td><td>11.2</td><td>10.6</td><td>10.5</td><td><b>9.2</b></td></tr>
+                <tr><td><b>TRACE</b></td><td>8.8</td><td>2.0</td><td>6.0</td><td>18.6</td><td>13.5</td><td><b>5.9</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="title is-4" style="margin-top: 2rem;">What CMB adds</h3>
+          <p>
+            Against the eight recent video-cultural benchmarks compared in Table 1 of the paper:
+          </p>
+          <div class="table-container">
+            <table class="table is-narrow compare-table" style="margin-left:auto;margin-right:auto;font-size:0.9rem;">
+              <thead>
+                <tr><th>Design dimension</th><th class="has-text-centered">CMB</th><th class="has-text-centered">8 video benchmarks in Table 1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Southeast Asia focus</td><td class="has-text-centered yes">&#10003;</td><td class="has-text-centered">2 of 8, partial coverage</td></tr>
+                <tr><td>Multi-stage cascade with distinct ability stages</td><td class="has-text-centered yes">&#10003;</td><td class="has-text-centered no">0 of 8</td></tr>
+                <tr><td>Conditional cross-stage metrics</td><td class="has-text-centered yes">&#10003;</td><td class="has-text-centered">1 of 8</td></tr>
+                <tr><td>Free-form temporal localization</td><td class="has-text-centered yes">&#10003;</td><td class="has-text-centered no">0 of 8</td></tr>
+                <tr><td>Closed-book human evaluation</td><td class="has-text-centered yes">&#10003;</td><td class="has-text-centered">1 of 8 closed; 2 more partial or open</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dataset-section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3" id="dataset">Dataset and Construction</h2>
+        <div class="content has-text-justified">
+          <p>
+            CMB is built on one design principle: <b>humans produce all visual ground truth; LLMs scaffold only textual artifacts</b>. Local Annotators (native speakers) validate concepts and filter candidate videos; Cultural Annotators (native speakers with research or co-curricular involvement in their country's traditions) curate the symbolic descriptions and annotate S2 moments and S3 spans; non-local Reviewers run an Outsider Filter on every concept, answering each description from regional priors alone, so descriptions that leak regionally guessable cues are rewritten or discarded. DeepSeek-R1 audits option sets and sub-event descriptions as text only; it never sees video, audio, or frames.
+          </p>
+          <div class="content has-text-centered">
+            <img src="static/images/fig2_pipeline.png" style="width: 100%;" alt="CMB construction pipeline: preprocessing, stage construction, and quality validation" loading="lazy"/>
+            <p class="is-size-6 has-text-grey">
+              The construction pipeline: preprocessing yields 306 concepts and 624 source videos; each concept is materialized into S1, S2, and S3 questions; every concept passes the Outsider Filter and S3 triage before entering the validated benchmark.
+            </p>
+          </div>
+          <p>
+            The 306 concepts are organized as <code>country/category/concept</code> over seven countries: four with Latin script (Indonesia, Malaysia, the Philippines, Vietnam) and three with non-Latin scripts (Cambodia, Myanmar, Thailand). From about 6,120 candidate videos found by concept-and-country search, Local Annotators keep 624: Set A (one per concept, 306 videos, 2.0 minutes on average) for Stage 2, and Set B (318 videos, 6.2 minutes on average) for Stage 3.
+          </p>
+          <figure class="dist-bars" aria-label="Concepts per category">
+            <div class="dist-row"><span>Celebration</span><span class="dist-track"><span class="dist-fill" style="width:100%"></span></span><span class="dist-val">91</span></div>
+            <div class="dist-row"><span>Game</span><span class="dist-track"><span class="dist-fill" style="width:84%"></span></span><span class="dist-val">76</span></div>
+            <div class="dist-row"><span>Music</span><span class="dist-track"><span class="dist-fill" style="width:75%"></span></span><span class="dist-val">68</span></div>
+            <div class="dist-row"><span>Dance</span><span class="dist-track"><span class="dist-fill" style="width:66%"></span></span><span class="dist-val">60</span></div>
+            <div class="dist-row"><span>Wedding</span><span class="dist-track"><span class="dist-fill" style="width:12%"></span></span><span class="dist-val">11</span></div>
+            <figcaption class="dist-note">Concepts per category. Counts are uneven across categories and countries (Vietnam 55 vs. Cambodia 28), reflecting the natural breadth of each tradition and the volume of online video; see the paper's Limitations for how to read per-category aggregates.</figcaption>
+          </figure>
+          <h3 class="title is-4" style="margin-top: 2rem;">Release</h3>
+          <div class="release-box content">
+            <p>
+              All 624 source videos were publicly hosted on YouTube at annotation time. To respect the platform's terms and uploader copyright, <b>CMB releases YouTube video IDs, S2 moment timestamps, and S3 ground-truth spans, not video bytes</b>, together with the full evaluation suite: inference wrappers for all six models, scoring for all stages and modes including c-S2, c-mIoU, and Joint, the cluster-bootstrap script behind every confidence interval, and the scored per-pair records of every model on every concept.
+            </p>
+            <p>
+              The benchmark items are released in stages: a stratified public sample covering all seven countries and five categories arrives first on HuggingFace for development, while the remaining items are held back as a hidden test set for a planned shared task. Releases are versioned so evaluations can be tied to a specific snapshot, and an opt-out protocol covers uploaders whose videos are referenced. Annotations and the evaluation suite are released under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial research.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3" id="submit">Evaluate on CMB</h2>
+        <div class="content has-text-justified">
+          <p>
+            Think your model knows Southeast Asian culture? Prove it, one ability at a time. Run the three stages under the three modes with the evaluation suite (public with the dataset release), then send your results and we will add them to the leaderboard:
+          </p>
+          <ul>
+            <li><b>Email:</b> send your result JSON to <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.</li>
+          </ul>
+          <p>Result JSON format:</p>
+          <pre style="font-size:0.8rem;">{
+  "model": "YourModel-32B",
+  "group": "Open",
+  "s1": 0.0,
+  "s2": {"reset": 0.0, "carry": 0.0, "feedback": 0.0},
+  "s3_miou": {"reset": 0.0, "carry": 0.0, "feedback": 0.0},
+  "joint": {"reset": 0.0, "carry": 0.0, "feedback": 0.0},
+  "paper_or_repo": "https://...",
+  "contact": "you@example.org"
+}</pre>
+          <h3 class="title is-4">Task definition</h3>
+          <p>
+            <b>Input:</b> a symbolic description of a cultural concept (S1, S2), four candidate names (S1) or four unlabeled candidate video moments (S2), and a different full video with a target sub-event description (S3).
+            <b>Output:</b> the chosen option (S1, S2) and a free-form [t<sub>start</sub>, t<sub>end</sub>] span (S3).
+            <b>Metrics:</b> accuracy for S1 and S2, mean IoU for S3, the conditional metrics c-S2 and c-mIoU for cascade analysis, and the Joint score for end-to-end success.
+            A stratified public sample is available for development; the hidden test set is reserved for the planned shared task.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths" style="width: 100%;">
+        <h2 class="title is-3" id="news">News</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li><b>[2026-08]</b> The camera-ready is out and this project page is live.</li>
+            <li><b>[2026-08]</b> CMB is accepted to the EMNLP 2026 Main Conference (15.4% acceptance rate).</li>
+            <li><b>Coming next:</b> the stratified public sample on HuggingFace, the evaluation code on GitHub, playable video moments on this page, and shared task details.</li>
+          </ul>
+          <h3 class="title is-4">What's next</h3>
+          <p>
+            CMB covers seven SEA countries and five categories; other SEA countries (Brunei, Laos, Timor-Leste, Singapore) and further categories are out of scope for now, reflecting the availability of qualified Local Annotators and high-quality source videos. We hope the CMB framework serves as a template for broadening cultural assessment to other underrepresented regions. If you want to collaborate on culturally aware multimodal AI or extend the framework to new regions,
+            <a href="https://buraksatar.github.io/meeting/">book a chat</a> or email <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.
+          </p>
+          <h3 class="title is-4">License</h3>
+          <p>
+            The benchmark annotations and evaluation suite are released under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial research. Source videos are referenced by YouTube ID and are not redistributed; copyright remains with the original uploaders, and an opt-out protocol is provided. CMB contains no personally identifiable information and is a test-only benchmark: please do not use it for training.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mathvista_other" id="citation"><span class="mathvista" style="vertical-align: middle">Citation</span></h1>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <!-- TODO: replace with the ACL Anthology entry once published -->
+    <pre>
+      <code>
+        @inproceedings{satar-etal-2026-cultural,
+            title = "Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia",
+            author = "Satar, Burak  and
+              Ma, Zhixin  and
+              Cheng, Yu-Tong  and
+              Tran, Huy Hoang  and
+              Nguyen, Phuong Anh  and
+              Ngo, Chong-Wah",
+            booktitle = "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+            year = "2026",
+            publisher = "Association for Computational Linguistics",
+            note = "To appear"
+        }
+      </code>
+    </pre>
+  </div>
+</section>
+
+<section>
+  <div class="section" id="org-banners" style="display:flex; justify-content:center; align-items:center;">
+    <a href="https://www.smu.edu.sg/" target="_blank" rel="external">
+      <img class="center-block org-banner" src="static/images/logo-smu.svg" style="height:17em" alt="Singapore Management University" loading="lazy">
+    </a>
+    <!-- TODO: swap for the official UIT logo file if desired -->
+    <a href="https://en.uit.edu.vn/" target="_blank" rel="external" class="org-text">
+      University of Information Technology<br>VNU-HCM
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        Part of the SEA culture benchmark series:
+        <a href="https://seeingculture-benchmark.github.io/"><b>SCB</b> (image)</a> &middot; <b>CMB</b> (video)
+      </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is adapted from the <a href="https://seeingculture-benchmark.github.io/">Seeing Culture Benchmark</a> page, itself built on <a href="https://nerfies.github.io/">Nerfies</a> and <a href="https://mathvista.github.io/">MathVista</a>, licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // navbar burger
+  var burger = document.getElementById("cmb-burger");
+  var menu = document.getElementById("cmb-menu");
+  if (burger && menu) {
+    burger.addEventListener("click", function() {
+      burger.classList.toggle("is-active");
+      menu.classList.toggle("is-active");
+    });
+  }
+
+  // walkthrough tabs
+  var tabs = document.querySelectorAll(".walkthrough .tabs li");
+  tabs.forEach(function(tab) {
+    tab.addEventListener("click", function() {
+      tabs.forEach(function(t) { t.classList.remove("is-active"); });
+      tab.classList.add("is-active");
+      document.querySelectorAll(".wt-panel").forEach(function(p) { p.classList.remove("is-active"); });
+      var panel = document.getElementById(tab.getAttribute("data-wt"));
+      if (panel) { panel.classList.add("is-active"); }
+    });
+  });
+
+  // walkthrough reveal (S1 options and S2 tiles)
+  ["wt-s1-options", "wt-s2-options"].forEach(function(id) {
+    var box = document.getElementById(id);
+    if (!box) { return; }
+    box.addEventListener("click", function(ev) {
+      var btn = ev.target.closest("[data-ok]");
+      if (!btn || box.classList.contains("wt-revealed")) { return; }
+      box.classList.add("wt-revealed");
+      box.querySelectorAll("[data-ok]").forEach(function(b) {
+        b.classList.add(b.getAttribute("data-ok") === "1" ? "is-correct" : "is-wrong");
+      });
+    });
+  });
+
+  // leaderboard
+  if (typeof cmb_leaderboard === "undefined") { return; }
+  var rows = cmb_leaderboard.slice().sort(function(a, b) { return b.j_c - a.j_c; });
+  var medals = ["🥇", "🥈", "🥉"];
+  var body = document.getElementById("cmb-leaderboard-body");
+  function cell(v) { return (v === null || v === undefined) ? "–" : v.toFixed(1); }
+  rows.forEach(function(r, i) {
+    var tr = document.createElement("tr");
+    var medal = i < 3 ? " " + medals[i] : "";
+    var groupTag = r.group === "Open"
+      ? '<span class="tag is-success is-light">Open</span>'
+      : '<span class="tag is-dark">Closed</span>';
+    tr.innerHTML = "<td><b>" + r.model + "</b>" + medal + "</td>"
+      + "<td>" + groupTag + "</td>"
+      + "<td>" + cell(r.s1) + "</td>"
+      + "<td>" + cell(r.s2_r) + "</td><td>" + cell(r.s2_c) + "</td><td>" + cell(r.s2_f) + "</td>"
+      + "<td>" + cell(r.s3_r) + "</td><td>" + cell(r.s3_c) + "</td><td>" + cell(r.s3_f) + "</td>"
+      + "<td><b>" + cell(r.j_r) + "</b></td><td><b>" + cell(r.j_c) + "</b></td><td><b>" + cell(r.j_f) + "</b></td>"
+      + "<td>" + r.date + "</td>"
+      + '<td><a href="' + r.source + '">link</a></td>';
+    body.appendChild(tr);
+  });
+});
+</script>
+</body>
+</html>
