@@ -252,6 +252,31 @@
 .tile-still { display: block; width: 100%; height: auto; }
 .wt-strip { display: block; width: 100%; max-width: 640px; margin: 0 auto 0.6rem; border-radius: 4px; }
 
+/* S2 playable tiles */
+.tile-media { position: relative; display: block; aspect-ratio: 16 / 9; background: #10131a; }
+.tile-vid { display: block; width: 100%; height: 100%; object-fit: contain; }
+.tile-play {
+  position: absolute; right: 8px; bottom: 8px;
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(16, 19, 26, 0.72); color: #fff;
+  font-size: 0.68rem; line-height: 1;
+  transition: background 120ms ease;
+}
+.tile-play:hover, .tile-play:focus-visible { background: rgba(16, 19, 26, 0.95); }
+
+/* S3 player */
+.wt-video {
+  display: block; width: 100%; max-width: 640px;
+  margin: 0 auto 0.5rem; border-radius: 8px;
+  border: 1.5px solid var(--cmb-line); background: #000;
+}
+.wt-s3-actions { text-align: center; margin: 0.2rem 0 0.9rem; }
+.wt-source-note {
+  text-align: center; font-size: 0.78rem; color: #8a8f99;
+  max-width: 640px; margin: 1.1rem auto 0;
+}
+
 /* key findings cards */
 .fk-grid {
   display: grid;

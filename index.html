@@ -254,31 +254,46 @@
               <div class="wt-grid" id="wt-s2-options">
                 <button class="wt-tile" data-ok="0">
                   <span class="tile-label"><b>A</b>&nbsp;Waisak (Indonesia)</span>
-                  <img class="tile-still" src="static/images/wt_s2_a.png" alt="Video moment frames for option A" loading="lazy">
+                  <span class="tile-media">
+                    <video class="tile-vid" src="static/videos/wt_s2_a.mp4" poster="static/images/wt_s2_a_poster.jpg" muted loop playsinline preload="none" aria-label="Video moment for option A"></video>
+                    <span class="tile-play" role="button" tabindex="0" aria-label="Play preview A">&#9654;</span>
+                  </span>
                 </button>
                 <button class="wt-tile" data-ok="0">
                   <span class="tile-label"><b>B</b>&nbsp;Songkran (Thailand)</span>
-                  <img class="tile-still" src="static/images/wt_s2_b.png" alt="Video moment frames for option B" loading="lazy">
+                  <span class="tile-media">
+                    <video class="tile-vid" src="static/videos/wt_s2_b.mp4" poster="static/images/wt_s2_b_poster.jpg" muted loop playsinline preload="none" aria-label="Video moment for option B"></video>
+                    <span class="tile-play" role="button" tabindex="0" aria-label="Play preview B">&#9654;</span>
+                  </span>
                 </button>
                 <button class="wt-tile" data-ok="1">
                   <span class="tile-label"><b>C</b>&nbsp;Nyepi (Indonesia)</span>
-                  <img class="tile-still" src="static/images/wt_s2_c.png" alt="Video moment frames for option C" loading="lazy">
+                  <span class="tile-media">
+                    <video class="tile-vid" src="static/videos/wt_s2_c.mp4" poster="static/images/wt_s2_c_poster.jpg" muted loop playsinline preload="none" aria-label="Video moment for option C"></video>
+                    <span class="tile-play" role="button" tabindex="0" aria-label="Play preview C">&#9654;</span>
+                  </span>
                 </button>
                 <button class="wt-tile" data-ok="0">
                   <span class="tile-label"><b>D</b>&nbsp;Thimithi (Malaysia)</span>
-                  <img class="tile-still" src="static/images/wt_s2_d.png" alt="Video moment frames for option D" loading="lazy">
+                  <span class="tile-media">
+                    <video class="tile-vid" src="static/videos/wt_s2_d.mp4" poster="static/images/wt_s2_d_poster.jpg" muted loop playsinline preload="none" aria-label="Video moment for option D"></video>
+                    <span class="tile-play" role="button" tabindex="0" aria-label="Play preview D">&#9654;</span>
+                  </span>
                 </button>
               </div>
-              <p class="wt-hint">Frames are from the paper's Figure 1. In the evaluation, models watch the actual unlabeled moments; the country names above are shown here for illustration only. Playable clips arrive with the public release.</p>
+              <p class="wt-hint">These are the four actual dataset moments, muted; hover a tile, or tap its play badge, to preview without answering. The country labels are shown here for illustration only; in the evaluation the model watches the moments unlabeled. Click a tile to answer.</p>
             </div>
 
             <div class="wt-panel" id="wt-s3">
               <p class="wt-note">A different video of the same concept (Set B), so within-clip recall from Stage 2 cannot help. The model predicts a free-form [t<sub>start</sub>, t<sub>end</sub>] span.</p>
               <div class="wt-question">Locate the moment when the inactivity of Nyepi serves as an active spiritual practice to preserve the island's purity after the purgation rituals.</div>
-              <img class="wt-strip" src="static/images/wt_s3_strip.png" alt="Filmstrip of video B for the Nyepi Stage 3 example" loading="lazy">
+              <video id="wt-s3-video" class="wt-video" src="static/videos/wt_s3_nyepi.mp4" poster="static/images/wt_s3_poster.jpg" controls playsinline preload="metadata" aria-label="Full Stage 3 video for the Nyepi example"></video>
+              <div class="wt-s3-actions">
+                <button class="button is-small is-dark" id="wt-s3-play-span">&#9654;&nbsp;Play the annotated span (03:05 to 03:23)</button>
+              </div>
               <div class="wt-timeline">
-                <div class="wt-track"><span class="wt-span-gt" title="Human-annotated ground-truth span"></span></div>
-                <div class="wt-track-caption"><span>0:00</span><span>video B, ~6 min on average</span></div>
+                <div class="wt-track"><span class="wt-span-gt" style="left: 44.7%; width: 4.4%;" title="Human-annotated ground-truth span, 03:05 to 03:23. Click to play it."></span></div>
+                <div class="wt-track-caption"><span>0:00</span><span>video B, 6:54</span></div>
                 <div class="wt-legend">
                   <span><span class="key gt"></span>ground truth (human-annotated)</span>
                   <span><span class="key pred"></span>model prediction</span>
@@ -288,6 +303,8 @@
             </div>
 
           </div>
+
+          <p class="wt-source-note">The clips above are the dataset's working copies of this one published example concept, shown for illustration. The dataset release itself ships YouTube IDs and timestamps only; all footage remains with its original creators.</p>
 
           <h3 class="title is-4 has-text-centered" style="margin-top: 2.5rem;">One benchmark, three context modes</h3>
           <p class="has-text-centered" style="max-width: 640px; margin: 0 auto 1.25rem;">
@@ -644,8 +661,51 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll(".wt-panel").forEach(function(p) { p.classList.remove("is-active"); });
       var panel = document.getElementById(tab.getAttribute("data-wt"));
       if (panel) { panel.classList.add("is-active"); }
+      document.querySelectorAll(".walkthrough video").forEach(function(v) { v.pause(); });
     });
   });
+
+  // S2 tile previews: hover to play on pointer devices, play badge everywhere
+  var canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+  document.querySelectorAll(".wt-tile").forEach(function(tile) {
+    var vid = tile.querySelector(".tile-vid");
+    if (!vid) { return; }
+    if (canHover) {
+      tile.addEventListener("mouseenter", function() { vid.play().catch(function() {}); });
+      tile.addEventListener("mouseleave", function() { vid.pause(); vid.currentTime = 0; });
+    }
+    var badge = tile.querySelector(".tile-play");
+    if (badge) {
+      var toggle = function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (vid.paused) { vid.play().catch(function() {}); } else { vid.pause(); }
+      };
+      badge.addEventListener("click", toggle);
+      badge.addEventListener("keydown", function(ev) {
+        if (ev.key === "Enter" || ev.key === " ") { toggle(ev); }
+      });
+    }
+  });
+
+  // S3: play exactly the human-annotated span (185s to 203s)
+  var s3v = document.getElementById("wt-s3-video");
+  var s3btn = document.getElementById("wt-s3-play-span");
+  if (s3v && s3btn) {
+    var SPAN_T0 = 185, SPAN_T1 = 203;
+    var stopAtEnd = function() {
+      if (s3v.currentTime >= SPAN_T1) { s3v.pause(); s3v.removeEventListener("timeupdate", stopAtEnd); }
+    };
+    var playSpan = function() {
+      s3v.removeEventListener("timeupdate", stopAtEnd);
+      s3v.currentTime = SPAN_T0;
+      s3v.addEventListener("timeupdate", stopAtEnd);
+      s3v.play().catch(function() {});
+    };
+    s3btn.addEventListener("click", playSpan);
+    var gtSpan = document.querySelector(".wt-span-gt");
+    if (gtSpan) { gtSpan.style.cursor = "pointer"; gtSpan.addEventListener("click", playSpan); }
+  }
 
   // walkthrough reveal (S1 options and S2 tiles)
   ["wt-s1-options", "wt-s2-options"].forEach(function(id) {
