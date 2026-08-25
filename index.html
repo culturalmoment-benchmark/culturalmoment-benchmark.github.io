@@ -26,6 +26,7 @@
     "alternateName": "CMB",
     "description": "A video benchmark for cultural understanding in Southeast Asia: 306 expert-curated concepts from seven countries across five categories, evaluated in three stages (naming, visual recognition, temporal localization) under three context modes (Reset, Carry, Feedback). Humans produce all visual ground truth; the release references source videos by YouTube ID and does not redistribute video bytes. Published at EMNLP 2026.",
     "url": "https://culturalmoment-benchmark.github.io/",
+    "sameAs": ["https://arxiv.org/abs/2608.23065"],
     "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
     "isAccessibleForFree": true,
     "keywords": ["vision-language models", "video understanding", "cultural reasoning", "temporal localization", "Southeast Asia", "benchmark"],
@@ -131,21 +132,12 @@
           <div class="column has-text-centered">
             <div class="publication-links">
               <span class="link-block">
-                <a class="button is-normal is-rounded is-dark" title="The arXiv version is being prepared"
-                   style="pointer-events: none; opacity: 0.7; cursor: default;">
-                  <span class="icon"><i class="ai ai-arxiv"></i></span>
-                  <span>arXiv (coming soon)</span>
-                </a>
-              </span>
-              <!-- TODO: uncomment when the arXiv version is live
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/XXXX.XXXXX"
+                <a href="https://arxiv.org/abs/2608.23065"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="ai ai-arxiv"></i></span>
                   <span>arXiv</span>
                 </a>
               </span>
-              -->
               <!-- TODO: uncomment when the evaluation code is public
               <span class="link-block">
                 <a href="https://github.com/culturalmoment-benchmark"
@@ -295,10 +287,51 @@
               <p class="wt-hint">Scored as intersection over union between predicted and ground-truth spans, averaged over the 631 Stage-3 pairs.</p>
             </div>
 
-            <div class="mode-chips">
-              <div class="mode-chip"><b>Reset</b><br>no prior context between stages</div>
-              <div class="mode-chip"><b>Carry</b><br>the model's own previous answer is carried over</div>
-              <div class="mode-chip"><b>Feedback</b><br>previous answer plus the ground truth</div>
+          </div>
+
+          <h3 class="title is-4 has-text-centered" style="margin-top: 2.5rem;">One benchmark, three context modes</h3>
+          <p class="has-text-centered" style="max-width: 640px; margin: 0 auto 1.25rem;">
+            Every stage runs three times, varying what the model sees from earlier stages. Prior context turns out to help the strongest models and hurt the weakest.
+          </p>
+          <div class="modes-diagram">
+            <div class="mode-row">
+              <div class="mode-name"><b>Reset</b><span>fresh start</span></div>
+              <div class="mode-body">
+                <div class="mode-flow">
+                  <span class="stage-pill">S1</span>
+                  <span class="farrow blocked"><span class="fa-label">nothing carried</span></span>
+                  <span class="stage-pill">S2</span>
+                  <span class="farrow blocked"><span class="fa-label">nothing carried</span></span>
+                  <span class="stage-pill">S3</span>
+                </div>
+                <p class="mode-desc">Each stage sees only its own question. The baseline of pure, isolated ability.</p>
+              </div>
+            </div>
+            <div class="mode-row">
+              <div class="mode-name"><b>Carry</b><span>own answer</span></div>
+              <div class="mode-body">
+                <div class="mode-flow">
+                  <span class="stage-pill">S1</span>
+                  <span class="farrow carry"><span class="fa-label">model's previous answer</span></span>
+                  <span class="stage-pill">S2</span>
+                  <span class="farrow carry"><span class="fa-label">model's previous answer</span></span>
+                  <span class="stage-pill">S3</span>
+                </div>
+                <p class="mode-desc">The model's own answer rides along, right or wrong, like a real multi-step pipeline.</p>
+              </div>
+            </div>
+            <div class="mode-row">
+              <div class="mode-name"><b>Feedback</b><span>open book</span></div>
+              <div class="mode-body">
+                <div class="mode-flow">
+                  <span class="stage-pill">S1</span>
+                  <span class="farrow feedback"><span class="fa-label">answer + ground truth</span></span>
+                  <span class="stage-pill">S2</span>
+                  <span class="farrow feedback"><span class="fa-label">answer + ground truth</span></span>
+                  <span class="stage-pill">S3</span>
+                </div>
+                <p class="mode-desc">The previous answer plus the correct one: an upper bound with the earlier stage solved.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -345,6 +378,28 @@
             <p class="is-size-6 has-text-grey">
               Modality roles across all S3 video pairs: share of videos where removing a modality hurts (complementary) or helps (distracting), by category and writing-system cluster.
             </p>
+          </div>
+
+          <div class="modx-card">
+            <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.5rem;">One striking case: no cue is redundant</h3>
+            <p class="modx-q">"Which moment shows the wedding reception where both families eat together, the large feast that marks the union?"</p>
+            <p class="modx-meta has-text-centered">Perkahwinan Melayu (Malaysia, wedding) &middot; video B, 5 min 17 s &middot; Malay narration over English captions</p>
+            <div class="modx-grid">
+              <figure>
+                <img src="static/images/mod_ex_gt.jpg" alt="The wedding feast moment, found with full audio and captions" loading="lazy">
+                <figcaption><span class="modx-chip gt">ground truth &middot; 4:07&ndash;4:12</span> With speech and captions, the feast is found.</figcaption>
+              </figure>
+              <figure>
+                <img src="static/images/mod_ex_drift.jpg" alt="The tea conversation Gemini drifts to without audio" loading="lazy">
+                <figcaption><span class="modx-chip drift">Gemini, no audio &middot; 4:13&ndash;4:18</span> Strip the audio and it drifts into the tea chat next door.</figcaption>
+              </figure>
+            </div>
+            <div class="wt-track" style="max-width: 640px; margin: 0.9rem auto 0.2rem;">
+              <span class="modx-span gt" style="left: 77.9%; width: 1.7%;" title="Ground truth 4:07-4:12"></span>
+              <span class="modx-span drift" style="left: 79.9%; width: 1.7%;" title="Gemini without audio 4:13-4:18"></span>
+            </div>
+            <div class="wt-track-caption" style="max-width: 640px; margin: 0 auto;"><span>0:00</span><span>5:17</span></div>
+            <p class="modx-punch has-text-centered">Gemini needs the speech; Qwen3.5 needs the captions. Drop either one and somebody loses the moment.</p>
           </div>
         </div>
       </div>
@@ -469,7 +524,7 @@
         <h2 class="title is-3" id="submit">Evaluate on CMB</h2>
         <div class="content has-text-justified">
           <p>
-            Think your model knows Southeast Asian culture? You will soon be able to prove it, one ability at a time. <b>We are preparing CMB as a challenge for an upcoming workshop at a conference</b>: the dataset, the evaluation suite, and the submission process will be announced here and on this page's News section. If you are interested in early access or in participating, email <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.
+            Think your model knows Southeast Asian culture? You will soon be able to prove it, one ability at a time. <b>We are preparing CMB as a challenge for upcoming workshops at ICMR 2027 and ACL 2027</b>: the dataset, the evaluation suite, and the submission process will be announced here and in the News section. If you are interested in early access or in participating, email <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.
           </p>
           <h3 class="title is-4">Task definition</h3>
           <p>
@@ -490,10 +545,18 @@
         <h2 class="title is-3" id="news">News</h2>
         <div class="content has-text-justified">
           <ul>
+            <li><b>[2026-08]</b> The paper is on arXiv: <a href="https://arxiv.org/abs/2608.23065">arXiv:2608.23065</a>.</li>
             <li><b>[2026-08]</b> The camera-ready is out and this project page is live.</li>
             <li><b>[2026-08]</b> CMB is accepted to the EMNLP 2026 Main Conference (15.4% acceptance rate).</li>
-            <li><b>Coming next:</b> the arXiv version, playable video moments on this page, and the challenge announcement with the dataset and evaluation suite.</li>
+            <li><b>Coming next:</b> playable video moments on this page, and the CMB challenge in preparation for workshops at ICMR 2027 and ACL 2027.</li>
           </ul>
+          <!-- TODO(visitor tracker): generate a map for culturalmoment-benchmark.github.io at
+               https://mapmyvisitors.com (same service as the SCB page), then paste its snippet here:
+          <div style="text-align: center;">
+            <a href="https://mapmyvisitors.com/web/XXXXX" title="Visit tracker"><img src="https://mapmyvisitors.com/map.png?d=YOUR_MAP_ID&cl=ffffff"></a>
+          </div>
+          -->
+
           <h3 class="title is-4">What's next</h3>
           <p>
             CMB covers seven SEA countries and five categories; other SEA countries (Brunei, Laos, Timor-Leste, Singapore) and further categories are out of scope for now, reflecting the availability of qualified Local Annotators and high-quality source videos. Next on the roadmap: balancing the dataset across categories and countries, preparing the challenge, and broadening cultural assessment to other underrepresented regions with the CMB framework as a template. If you want to collaborate on culturally aware multimodal AI or extend the framework to new regions,
@@ -517,10 +580,21 @@
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content has-text-centered">
-    <!-- TODO: add the BibTeX entry once the arXiv version (and later the ACL Anthology entry) is live -->
-    <p class="is-size-5">
-      The paper is accepted to the <b>EMNLP 2026 Main Conference</b>.<br>
-      The arXiv version and the BibTeX entry are <b>coming soon</b>.
+    <!-- TODO: replace with the ACL Anthology entry once published -->
+    <pre>
+      <code>
+        @misc{satar2026cultural,
+            title={Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia},
+            author={Burak Satar and Zhixin Ma and Yu-Tong Cheng and Huy Hoang Tran and Phuong Anh Nguyen and Chong-Wah Ngo},
+            year={2026},
+            eprint={2608.23065},
+            archivePrefix={arXiv},
+            url={https://arxiv.org/abs/2608.23065}
+        }
+      </code>
+    </pre>
+    <p class="is-size-6 has-text-grey" style="text-align: left;">
+      Accepted to the EMNLP 2026 Main Conference; this entry will be replaced by the ACL Anthology version once published.
     </p>
   </div>
 </section>
@@ -531,7 +605,7 @@
       <img class="center-block org-banner" src="static/images/logo-smu.svg" style="height:17em" alt="Singapore Management University" loading="lazy">
     </a>
     <a href="https://en.uit.edu.vn/" target="_blank" rel="external" style="margin-left: 2.5rem;">
-      <img class="center-block org-banner" src="static/images/logo-uit.svg" style="height:11em"
+      <img class="center-block org-banner" src="static/images/logo-uit.png" style="height:11em"
            alt="University of Information Technology, VNU-HCM" loading="lazy"
            onerror="this.style.display='none'; this.parentNode.querySelector('.org-text-fallback').style.display='flex';">
       <span class="org-text org-text-fallback" style="display:none;">University of Information Technology<br>VNU-HCM</span>
