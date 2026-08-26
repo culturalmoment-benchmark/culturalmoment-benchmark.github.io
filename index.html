@@ -50,7 +50,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/leaderboard.css">
-  <link rel="stylesheet" href="./static/css/cmb.css">
+  <link rel="stylesheet" href="./static/css/cmb.css?v=3">
 
   <script type="text/javascript" src="static/js/sort-table.js" defer></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -287,7 +287,7 @@
             <div class="wt-panel" id="wt-s3">
               <p class="wt-note">A different video of the same concept (Set B), so within-clip recall from Stage 2 cannot help. The model predicts a free-form [t<sub>start</sub>, t<sub>end</sub>] span.</p>
               <div class="wt-question">Locate the moment when the inactivity of Nyepi serves as an active spiritual practice to preserve the island's purity after the purgation rituals.</div>
-              <video id="wt-s3-video" class="wt-video" src="static/videos/wt_s3_nyepi.mp4" poster="static/images/wt_s3_poster.jpg" controls playsinline preload="metadata" aria-label="Full Stage 3 video for the Nyepi example"></video>
+              <video id="wt-s3-video" class="wt-video" style="display:block; width:100%; max-width:640px; margin:0 auto 0.5rem;" src="static/videos/wt_s3_nyepi.mp4" poster="static/images/wt_s3_poster.jpg" controls playsinline preload="metadata" aria-label="Full Stage 3 video for the Nyepi example"></video>
               <div class="wt-s3-actions">
                 <button class="button is-small is-dark" id="wt-s3-play-span">&#9654;&nbsp;Play the annotated span (03:05 to 03:23)</button>
               </div>
@@ -305,6 +305,7 @@
           </div>
 
           <p class="wt-source-note">The clips above are the dataset's working copies of this one published example concept, shown for illustration. The dataset release itself ships YouTube IDs and timestamps only; all footage remains with its original creators.</p>
+
 
           <h3 class="title is-4 has-text-centered" style="margin-top: 2.5rem;">One benchmark, three context modes</h3>
           <p class="has-text-centered" style="max-width: 640px; margin: 0 auto 1.25rem;">
@@ -562,10 +563,11 @@
         <h2 class="title is-3" id="news">News</h2>
         <div class="content has-text-justified">
           <ul>
+            <li><b>[2026-08]</b> The walkthrough above now plays the real Nyepi example from dataset clips.</li>
             <li><b>[2026-08]</b> The paper is on arXiv: <a href="https://arxiv.org/abs/2608.23065">arXiv:2608.23065</a>.</li>
             <li><b>[2026-08]</b> The camera-ready is out and this project page is live.</li>
             <li><b>[2026-08]</b> CMB is accepted to the EMNLP 2026 Main Conference (15.4% acceptance rate).</li>
-            <li><b>Coming next:</b> playable video moments on this page, and the CMB challenge in preparation for workshops at ICMR 2027 and ACL 2027.</li>
+            <li><b>Coming next:</b> the public sample on Hugging Face, and the CMB challenge in preparation for workshops at ICMR 2027 and ACL 2027.</li>
           </ul>
           <h3 class="title is-4">What's next</h3>
           <p>
