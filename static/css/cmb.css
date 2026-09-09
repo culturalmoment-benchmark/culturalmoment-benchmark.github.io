@@ -20,6 +20,11 @@
   white-space: nowrap;
 }
 .series-pill:hover { background: var(--cmb-navy); color: #fff; }
+/* laptops between Bulma's desktop breakpoint and about 1230px: nine navbar items plus the pill overflow the viewport */
+@media (min-width: 1024px) and (max-width: 1230px) {
+  .navbar-item { padding-left: 0.5rem; padding-right: 0.5rem; font-size: 0.92rem; }
+  .series-pill .pill-long { display: none; }
+}
 
 /* stat strip */
 .cmb-stats .title { margin-bottom: 0.25rem; color: var(--cmb-navy); }
@@ -37,9 +42,9 @@
   color: var(--cmb-navy);
   font-weight: 700;
 }
-/* phones: stack the three stage tabs instead of a strip that scrolls off-screen */
-@media (max-width: 768px) {
-  .walkthrough .tabs { font-size: 0.95rem; }
+/* phones and tablets: stack the three stage tabs instead of a strip that scrolls off-screen */
+@media (max-width: 1023px) {
+  .walkthrough .tabs { font-size: 1rem; display: block; overflow: visible; }
   .walkthrough .tabs ul { flex-wrap: wrap; }
   .walkthrough .tabs li { flex: 1 1 100%; }
 }
