@@ -392,3 +392,6 @@
 /* leaderboard tweaks */
 #cmb-leaderboard-table th { white-space: nowrap; }
 .lb-note { font-size: 0.85rem; color: #6a6f7a; }
+
+/* Inline SVG icons (the FontAwesome script is no longer loaded) */
+.svg-icon { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; fill: currentColor; }
