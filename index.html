@@ -12,12 +12,12 @@
   <meta property="og:title" content="Cultural Moment Benchmark">
   <meta property="og:description" content="EMNLP 2026 benchmark: naming, visual recognition, and temporal localization of Southeast Asian cultural concepts in video, scored per ability under three context modes.">
   <meta property="og:url" content="https://culturalmoment-benchmark.github.io/">
-  <meta property="og:image" content="https://culturalmoment-benchmark.github.io/static/images/og-teaser.jpg">
+  <meta property="og:image" content="https://culturalmoment-benchmark.github.io/static/images/og-card.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cultural Moment Benchmark">
   <meta name="twitter:description" content="Video cultural reasoning and grounding in Southeast Asia: three abilities, three stages, three modes. 306 expert-curated concepts, 624 videos, six VLMs evaluated.">
-  <meta name="twitter:image" content="https://culturalmoment-benchmark.github.io/static/images/og-teaser.jpg">
+  <meta name="twitter:image" content="https://culturalmoment-benchmark.github.io/static/images/og-card.jpg">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -429,7 +429,7 @@
         <h2 class="title is-3" id="leaderboard">Leaderboard</h2>
         <div class="content has-text-justified">
           <p>
-            Zero-shot results of the 3-stage &times; 3-mode evaluation. <b>S1</b> and <b>S2</b> are 4-option multiple-choice accuracy (random guess is 25%). <b>S3</b> is mean IoU of the predicted free-form span over the 631 Stage-3 pairs. <b>Joint</b> credits a concept only when all three abilities line up. <b>R / C / F</b> mark the Reset, Carry, and Feedback context modes; S1 has one column because there is no prior context to carry. Seed results are from Table 2 of the paper; conditional cascade metrics (c-S2, c-mIoU) are in its Table 3. Click a column header to sort.
+            Zero-shot results of the 3-stage &times; 3-mode evaluation. <b>S1</b> and <b>S2</b> are 4-option multiple-choice accuracy (random guess is 25%). <b>S3</b> is mean IoU of the predicted free-form span over the 631 Stage-3 pairs. <b>Joint</b> credits a concept only when all three abilities line up. <b>R / C / F</b> mark the Reset, Carry, and Feedback context modes; S1 has one column because there is no prior context to carry. Seed results are from Table 2 of the paper; conditional cascade metrics (c-S2, c-mIoU) are in its Table 3. Rows are sorted by Joint under Carry; click a column header to re-sort. Source links the paper or repository each row comes from.
           </p>
           <div class="table-container">
             <table class="table is-striped is-narrow is-hoverable js-sort-table" id="cmb-leaderboard-table" style="margin-left:auto;margin-right:auto;font-size:0.85rem;">
@@ -442,6 +442,7 @@
                   <th class="js-sort-number">S3 R</th><th class="js-sort-number">S3 C</th><th class="js-sort-number">S3 F</th>
                   <th class="js-sort-number">Joint R</th><th class="js-sort-number">Joint C</th><th class="js-sort-number">Joint F</th>
                   <th>Date</th>
+                  <th>Source</th>
                 </tr>
               </thead>
               <tbody id="cmb-leaderboard-body"></tbody>
@@ -541,6 +542,21 @@
           <p>
             Think your model knows Southeast Asian culture? You will soon be able to prove it, one ability at a time. <b>We are preparing CMB as a challenge for an upcoming workshop at ACL 2027</b>: the dataset, the evaluation suite, and the submission process will be announced here and in the News section. If you are interested in early access or in participating, email <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.
           </p>
+          <h3 class="title is-4">Submitting results</h3>
+          <p>
+            Once the evaluation suite is public, send zero-shot results as one JSON record in the format below, by email to <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a> or as a <a href="https://github.com/culturalmoment-benchmark/culturalmoment-benchmark.github.io/issues/new">GitHub issue</a> on this site's repository (public record). Values are percentages, as in Table 2; accepted rows appear on the leaderboard with a link to the paper or repository they come from.
+          </p>
+          <pre style="font-size:0.8rem;">{
+  "model": "YourModel-32B",
+  "group": "Open",
+  "s1": 0.0,
+  "s2_r": 0.0, "s2_c": 0.0, "s2_f": 0.0,
+  "s3_r": 0.0, "s3_c": 0.0, "s3_f": 0.0,
+  "j_r": 0.0, "j_c": 0.0, "j_f": 0.0,
+  "date": "YYYY-MM",
+  "source": "https://...",
+  "contact": "you@example.org"
+}</pre>
           <h3 class="title is-4">Task definition</h3>
           <p>
             <b>Input:</b> a symbolic description of a cultural concept (S1, S2), four candidate names (S1) or four unlabeled candidate video moments (S2), and a different full video with a target sub-event description (S3).
@@ -584,7 +600,7 @@
 
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1 mathvista_other" id="citation"><span class="mathvista" style="vertical-align: middle">Citation</span></h1>
+    <h2 class="title is-2" id="citation">Citation</h2>
   </div>
 </section>
 
@@ -649,6 +665,7 @@ document.addEventListener("DOMContentLoaded", function() {
     burger.addEventListener("click", function() {
       burger.classList.toggle("is-active");
       menu.classList.toggle("is-active");
+      burger.setAttribute("aria-expanded", menu.classList.contains("is-active") ? "true" : "false");
     });
   }
 
@@ -739,7 +756,8 @@ document.addEventListener("DOMContentLoaded", function() {
       + "<td>" + cell(r.s2_r) + "</td><td>" + cell(r.s2_c) + "</td><td>" + cell(r.s2_f) + "</td>"
       + "<td>" + cell(r.s3_r) + "</td><td>" + cell(r.s3_c) + "</td><td>" + cell(r.s3_f) + "</td>"
       + "<td><b>" + cell(r.j_r) + "</b></td><td><b>" + cell(r.j_c) + "</b></td><td><b>" + cell(r.j_f) + "</b></td>"
-      + "<td>" + r.date + "</td>";
+      + "<td>" + r.date + "</td>"
+      + "<td>" + (r.source ? '<a href="' + r.source + '">link</a>' : "\u2013") + "</td>";
     body.appendChild(tr);
   });
 });
