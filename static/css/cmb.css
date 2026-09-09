@@ -37,6 +37,12 @@
   color: var(--cmb-navy);
   font-weight: 700;
 }
+/* phones: stack the three stage tabs instead of a strip that scrolls off-screen */
+@media (max-width: 768px) {
+  .walkthrough .tabs { font-size: 0.95rem; }
+  .walkthrough .tabs ul { flex-wrap: wrap; }
+  .walkthrough .tabs li { flex: 1 1 100%; }
+}
 .wt-panel { display: none; }
 .wt-panel.is-active { display: block; }
 .wt-note {

@@ -26,7 +26,7 @@
     "alternateName": "CMB",
     "description": "A video benchmark for cultural understanding in Southeast Asia: 306 expert-curated concepts from seven countries across five categories, evaluated in three stages (naming, visual recognition, temporal localization) under three context modes (Reset, Carry, Feedback). Humans produce all visual ground truth; the release references source videos by YouTube ID and does not redistribute video bytes. Published at EMNLP 2026.",
     "url": "https://culturalmoment-benchmark.github.io/",
-    "sameAs": ["https://arxiv.org/abs/2608.23065"],
+    "sameAs": ["https://arxiv.org/abs/2608.23065", "https://huggingface.co/datasets/Multimedia-SMU/culturalmoment-benchmark"],
     "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
     "isAccessibleForFree": true,
     "keywords": ["vision-language models", "video understanding", "cultural reasoning", "temporal localization", "Southeast Asia", "benchmark"],
@@ -46,11 +46,10 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/leaderboard.css">
-  <link rel="stylesheet" href="./static/css/cmb.css?v=3">
+  <link rel="stylesheet" href="./static/css/cmb.css?v=4">
 
   <script type="text/javascript" src="static/js/sort-table.js" defer></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -126,7 +125,7 @@
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup style="color:#6fbf73;">1</sup>Singapore Management University,</span>
             <span class="author-block"><sup style="color:#ed4b82;">2</sup>UIT, VNU-HCM</span><br>
-            <span class="paper-block"><b style="color:#f41c1c">EMNLP 2026 Main Conference</b> (15.4% acceptance rate)</span>
+            <span class="paper-block"><b style="color:#f41c1c">EMNLP 2026 Main Conference</b></span>
           </div>
 
           <div class="column has-text-centered">
@@ -201,7 +200,7 @@
         <h2 class="title is-3">Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia</h2>
         <div class="content has-text-justified">
           <div class="content has-text-centered">
-            <img src="static/images/fig1_teaser.png" style="width: 100%; max-width: 560px;" alt="CMB three-stage probe of one cultural concept: naming, visual recognition, temporal localization"/>
+            <img src="static/images/fig1_teaser.webp" style="width: 100%; max-width: 560px;" alt="CMB three-stage probe of one cultural concept: naming, visual recognition, temporal localization"/>
             <p class="is-size-6 has-text-grey">
               One concept, three probes: Stage 1 names it, Stage 2 recognizes it among unlabeled video moments, Stage 3 localizes its sub-event on a different video.
             </p>
@@ -519,7 +518,7 @@
             CMB is built on one design principle: <b>humans produce all visual ground truth; LLMs scaffold only textual artifacts</b>. Local Annotators (native speakers) validate concepts and filter candidate videos; Cultural Annotators (native speakers with research or co-curricular involvement in their country's traditions) curate the symbolic descriptions and annotate S2 moments and S3 spans; non-local Reviewers run an Outsider Filter on every concept, answering each description from regional priors alone, so descriptions that leak regionally guessable cues are rewritten or discarded. DeepSeek-R1 audits option sets and sub-event descriptions as text only; it never sees video, audio, or frames.
           </p>
           <div class="content has-text-centered">
-            <img src="static/images/fig2_pipeline.png" style="width: 100%;" alt="CMB construction pipeline: preprocessing, stage construction, and quality validation" loading="lazy"/>
+            <img src="static/images/fig2_pipeline.webp" style="width: 100%;" alt="CMB construction pipeline: preprocessing, stage construction, and quality validation" loading="lazy"/>
             <p class="is-size-6 has-text-grey">
               The construction pipeline: preprocessing yields 306 concepts and 624 source videos; each concept is materialized into S1, S2, and S3 questions; every concept passes the Outsider Filter and S3 triage before entering the validated benchmark.
             </p>
@@ -540,7 +539,7 @@
         <h2 class="title is-3" id="submit">Evaluate on CMB</h2>
         <div class="content has-text-justified">
           <p>
-            Think your model knows Southeast Asian culture? You will soon be able to prove it, one ability at a time. <b>We are preparing CMB as a challenge for upcoming workshops at ICMR 2027 and ACL 2027</b>: the dataset, the evaluation suite, and the submission process will be announced here and in the News section. If you are interested in early access or in participating, email <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.
+            Think your model knows Southeast Asian culture? You will soon be able to prove it, one ability at a time. <b>We are preparing CMB as a challenge for an upcoming workshop at ACL 2027</b>: the dataset, the evaluation suite, and the submission process will be announced here and in the News section. If you are interested in early access or in participating, email <a href="mailto:buraks@smu.edu.sg">buraks@smu.edu.sg</a>.
           </p>
           <h3 class="title is-4">Task definition</h3>
           <p>
@@ -561,11 +560,12 @@
         <h2 class="title is-3" id="news">News</h2>
         <div class="content has-text-justified">
           <ul>
+            <li><b>[2026-08]</b> A first public sample (the Nyepi walkthrough concept, end to end) is on <a href="https://huggingface.co/datasets/Multimedia-SMU/culturalmoment-benchmark">Hugging Face</a>.</li>
             <li><b>[2026-08]</b> The walkthrough above now plays the real Nyepi example from dataset clips.</li>
             <li><b>[2026-08]</b> The paper is on arXiv: <a href="https://arxiv.org/abs/2608.23065">arXiv:2608.23065</a>.</li>
             <li><b>[2026-08]</b> The camera-ready is out and this project page is live.</li>
-            <li><b>[2026-08]</b> CMB is accepted to the EMNLP 2026 Main Conference (15.4% acceptance rate).</li>
-            <li><b>Coming next:</b> the public sample on Hugging Face, and the CMB challenge in preparation for workshops at ICMR 2027 and ACL 2027.</li>
+            <li><b>[2026-08]</b> CMB is accepted to the EMNLP 2026 Main Conference.</li>
+            <li><b>Coming next:</b> a larger public sample, the evaluation suite on GitHub, and the CMB challenge in preparation for a workshop at ACL 2027.</li>
           </ul>
           <h3 class="title is-4">What's next</h3>
           <p>
