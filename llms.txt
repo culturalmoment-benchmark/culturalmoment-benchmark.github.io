@@ -1,0 +1,78 @@
+# Cultural Moment Benchmark (CMB)
+
+> A video benchmark for cultural understanding in Southeast Asia, published at
+> the EMNLP 2026 Main Conference. It scores three abilities separately rather
+> than as one number: naming a cultural concept from a symbolic description,
+> recognizing it among unlabeled video moments, and localizing its sub-events in
+> time inside a different video of the same concept.
+
+Project page: https://culturalmoment-benchmark.github.io/
+Paper: https://arxiv.org/abs/2608.23065 (arXiv:2608.23065)
+Data: https://huggingface.co/datasets/Multimedia-SMU/culturalmoment-benchmark
+Licence: data CC BY-NC-SA 4.0; website CC BY-SA 4.0
+Contact: buraks@smu.edu.sg
+
+## What it contains
+
+- 306 expert-curated cultural concepts from seven countries in Southeast Asia:
+  Indonesia, Malaysia, the Philippines and Vietnam (Latin script), and Cambodia,
+  Myanmar and Thailand (non-Latin scripts).
+- Five categories: celebration, dance, game, music, wedding.
+- 624 videos kept by local annotators from about 6,120 candidates. Set A is one
+  video per concept (306 videos, 2.0 minutes on average) and drives Stage 2.
+  Set B is 318 videos (6.2 minutes on average) and drives Stage 3.
+- All visual ground truth is produced by humans. The release references source
+  videos by YouTube ID and does not redistribute video bytes.
+
+## The task
+
+Three stages, evaluated under three context modes (Reset, Carry, Feedback):
+
+1. Stage 1, naming: identify the concept from a symbolic description, not from
+   what is visible. Questions answerable by generic object recognition are
+   rejected at construction.
+2. Stage 2, recognition: pick the concept among unlabeled candidate video
+   moments.
+3. Stage 3, temporal localization: locate the concept's sub-events in time,
+   free-form, in a different video of the same concept.
+
+## Key findings
+
+- Best end-to-end score is 27.8%. Even Gemini 3.1 Pro clears all three stages
+  for fewer than 3 in 10 concepts. Open-source models land in single digits.
+- The cascade breaks. Correct naming lifts moment recognition by about 18 points
+  for the strongest models, but correct recognition adds nothing when localizing
+  on a fresh clip. Specialist grounding models top out at 19.3 mIoU against 33.4
+  for the best VLM.
+- Context widens the gap. With prior context Gemini's recognition climbs to
+  85.9% while InternVL's falls to 9.8%.
+- Audio can mislead. The share of videos where audio distracts doubles in
+  non-Latin-script countries.
+- The knowledge is country-specific, not regional. Expert raters fall to 21.3%,
+  below the 25% chance line, when naming a neighbouring country's concepts.
+
+## Related
+
+- Seeing Culture Benchmark (SCB, EMNLP 2025), the image predecessor that
+  established the reason-then-ground design: https://seeingculture-benchmark.github.io/
+- First author's homepage: https://buraksatar.github.io/
+
+## Leaderboard and submissions
+
+The leaderboard on the project page covers six vision-language models under all
+three modes. External submissions are accepted; see the Submit section of
+https://culturalmoment-benchmark.github.io/
+
+## Citation
+
+@misc{satar2026cultural,
+  title={Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia},
+  author={Burak Satar and Zhixin Ma and Yu-Tong Cheng and Huy Hoang Tran and Phuong Anh Nguyen and Chong-Wah Ngo},
+  year={2026},
+  eprint={2608.23065},
+  archivePrefix={arXiv},
+  url={https://arxiv.org/abs/2608.23065}
+}
+
+Accepted to the EMNLP 2026 Main Conference. This entry will be replaced by the
+ACL Anthology version once published.

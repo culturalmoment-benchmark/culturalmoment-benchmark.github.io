@@ -19,26 +19,223 @@
   <meta name="twitter:description" content="Video cultural reasoning and grounding in Southeast Asia: three abilities, three stages, three modes. 306 expert-curated concepts, 624 videos, six VLMs evaluated.">
   <meta name="twitter:image" content="https://culturalmoment-benchmark.github.io/static/images/og-card.jpg">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Dataset",
-    "name": "Cultural Moment Benchmark",
-    "alternateName": "CMB",
-    "description": "A video benchmark for cultural understanding in Southeast Asia: 306 expert-curated concepts from seven countries across five categories, evaluated in three stages (naming, visual recognition, temporal localization) under three context modes (Reset, Carry, Feedback). Humans produce all visual ground truth; the release references source videos by YouTube ID and does not redistribute video bytes. Published at EMNLP 2026.",
-    "url": "https://culturalmoment-benchmark.github.io/",
-    "sameAs": ["https://arxiv.org/abs/2608.23065", "https://huggingface.co/datasets/Multimedia-SMU/culturalmoment-benchmark"],
-    "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-    "isAccessibleForFree": true,
-    "keywords": ["vision-language models", "video understanding", "cultural reasoning", "temporal localization", "Southeast Asia", "benchmark"],
-    "creator": [
-      {"@type": "Person", "name": "Burak Satar", "url": "https://buraksatar.github.io/"},
-      {"@type": "Person", "name": "Zhixin Ma"},
-      {"@type": "Person", "name": "Cheng Yu-Tong"},
-      {"@type": "Person", "name": "Huy Hoang Tran"},
-      {"@type": "Person", "name": "Phuong Anh Nguyen"},
-      {"@type": "Person", "name": "Chong-Wah Ngo"}
-    ]
-  }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://culturalmoment-benchmark.github.io/#website",
+      "url": "https://culturalmoment-benchmark.github.io/",
+      "name": "Cultural Moment Benchmark",
+      "description": "Project site for the Cultural Moment Benchmark (CMB), EMNLP 2026.",
+      "inLanguage": "en",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Singapore Management University",
+        "url": "https://www.smu.edu.sg/",
+        "department": {
+          "@type": "Organization",
+          "name": "School of Computing and Information Systems"
+        }
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://culturalmoment-benchmark.github.io/#dataset",
+      "name": "Cultural Moment Benchmark",
+      "alternateName": [
+        "CMB",
+        "Cultural Moment"
+      ],
+      "description": "A video benchmark for cultural understanding in Southeast Asia: 306 expert-curated concepts from seven countries across five categories, evaluated over 624 videos in three stages (naming from a symbolic description, visual recognition among unlabeled video moments, and free-form temporal localization of sub-events) under three context modes (Reset, Carry, Feedback). The three abilities are scored separately rather than as one number. Humans produce all visual ground truth; the release references source videos by YouTube ID and does not redistribute video bytes. Published at EMNLP 2026 (Main Conference).",
+      "url": "https://culturalmoment-benchmark.github.io/",
+      "sameAs": [
+        "https://arxiv.org/abs/2608.23065",
+        "https://huggingface.co/datasets/Multimedia-SMU/culturalmoment-benchmark"
+      ],
+      "identifier": "arXiv:2608.23065",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "isAccessibleForFree": true,
+      "version": "1.0",
+      "datePublished": "2026-08-25",
+      "dateModified": "2026-09-14",
+      "inLanguage": "en",
+      "keywords": [
+        "vision-language models",
+        "video understanding",
+        "cultural reasoning",
+        "temporal localization",
+        "video moment retrieval",
+        "Southeast Asia",
+        "benchmark",
+        "multimodal evaluation"
+      ],
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "Burak Satar",
+          "url": "https://buraksatar.github.io/"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhixin Ma",
+          "url": "https://zhixinma.github.io/"
+        },
+        {
+          "@type": "Person",
+          "name": "Cheng Yu-Tong"
+        },
+        {
+          "@type": "Person",
+          "name": "Huy Hoang Tran"
+        },
+        {
+          "@type": "Person",
+          "name": "Phuong Anh Nguyen"
+        },
+        {
+          "@type": "Person",
+          "name": "Chong-Wah Ngo"
+        }
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Singapore Management University",
+        "url": "https://www.smu.edu.sg/",
+        "department": {
+          "@type": "Organization",
+          "name": "School of Computing and Information Systems"
+        }
+      },
+      "spatialCoverage": [
+        {
+          "@type": "Place",
+          "name": "Cambodia"
+        },
+        {
+          "@type": "Place",
+          "name": "Indonesia"
+        },
+        {
+          "@type": "Place",
+          "name": "Malaysia"
+        },
+        {
+          "@type": "Place",
+          "name": "Myanmar"
+        },
+        {
+          "@type": "Place",
+          "name": "Philippines"
+        },
+        {
+          "@type": "Place",
+          "name": "Thailand"
+        },
+        {
+          "@type": "Place",
+          "name": "Vietnam"
+        }
+      ],
+      "measurementTechnique": [
+        "Multiple-choice concept naming from a symbolic description",
+        "Visual recognition among unlabeled video moments",
+        "Free-form temporal localization of sub-events"
+      ],
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "Stage 1 naming accuracy",
+          "description": "Proportion of cultural concepts correctly named from a symbolic description."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Stage 2 recognition accuracy",
+          "description": "Proportion of concepts correctly recognized among unlabeled candidate video moments."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Stage 3 temporal localization",
+          "description": "Accuracy of free-form localization of a concept's sub-events in time within a different video of the same concept."
+        }
+      ],
+      "includedInDataCatalog": {
+        "@type": "DataCatalog",
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Cultural Moment Benchmark on Hugging Face",
+          "contentUrl": "https://huggingface.co/datasets/Multimedia-SMU/culturalmoment-benchmark",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "citation": {
+        "@id": "https://culturalmoment-benchmark.github.io/#article"
+      },
+      "isBasedOn": {
+        "@type": "Dataset",
+        "name": "Seeing Culture Benchmark",
+        "url": "https://seeingculture-benchmark.github.io/"
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://culturalmoment-benchmark.github.io/#article",
+      "headline": "Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia",
+      "name": "Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Burak Satar",
+          "url": "https://buraksatar.github.io/"
+        },
+        {
+          "@type": "Person",
+          "name": "Zhixin Ma",
+          "url": "https://zhixinma.github.io/"
+        },
+        {
+          "@type": "Person",
+          "name": "Cheng Yu-Tong"
+        },
+        {
+          "@type": "Person",
+          "name": "Huy Hoang Tran"
+        },
+        {
+          "@type": "Person",
+          "name": "Phuong Anh Nguyen"
+        },
+        {
+          "@type": "Person",
+          "name": "Chong-Wah Ngo"
+        }
+      ],
+      "datePublished": "2026-08-25",
+      "inLanguage": "en",
+      "publication": "EMNLP 2026",
+      "isPartOf": {
+        "@type": "PublicationEvent",
+        "name": "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+      },
+      "url": "https://arxiv.org/abs/2608.23065",
+      "sameAs": [
+        "https://culturalmoment-benchmark.github.io/static/pdf/CMB_camera_ready.pdf"
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "arXiv",
+        "value": "2608.23065"
+      },
+      "about": {
+        "@id": "https://culturalmoment-benchmark.github.io/#dataset"
+      }
+    }
+  ]
+}
   </script>
 
   <link rel="icon" href="./static/images/favicon.png">
