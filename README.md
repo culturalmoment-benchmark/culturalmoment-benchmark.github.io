@@ -1,6 +1,6 @@
 # Cultural Moment Benchmark: project page
 
-Project website for **Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia** (EMNLP 2026 Main Conference), live at https://culturalmoment-benchmark.github.io/. Adapted from the Seeing Culture Benchmark page, itself built on the Nerfies and MathVista templates; the site is licensed under CC BY-SA 4.0 (see LICENSE). Icons are inline SVG symbols at the top of `index.html`, from Font Awesome Free 5.15.1 (CC BY 4.0) and the Academicons arXiv glyph (SIL OFL 1.1); no icon script or icon font is loaded.
+Project website for **Cultural Moment Benchmark: Evaluating Video Cultural Reasoning and Grounding in Southeast Asia** (EMNLP 2026 Main Conference, Oral), live at https://culturalmoment-benchmark.github.io/. Adapted from the Seeing Culture Benchmark page, itself built on the Nerfies and MathVista templates; the site is licensed under CC BY-SA 4.0 (see LICENSE). Icons are inline SVG symbols at the top of `index.html`, from Font Awesome Free 5.15.1 (CC BY 4.0) and the Academicons arXiv glyph (SIL OFL 1.1); no icon script or icon font is loaded.
 
 ## Updating the leaderboard
 

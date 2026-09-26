@@ -1,10 +1,11 @@
 # Cultural Moment Benchmark (CMB)
 
 > A video benchmark for cultural understanding in Southeast Asia, published at
-> the EMNLP 2026 Main Conference. It scores three abilities separately rather
-> than as one number: naming a cultural concept from a symbolic description,
-> recognizing it among unlabeled video moments, and localizing its sub-events in
-> time inside a different video of the same concept.
+> the EMNLP 2026 Main Conference as an Oral (2.7% acceptance rate). It scores
+> three abilities separately rather than as one number: naming a cultural
+> concept from a symbolic description, recognizing it among unlabeled video
+> moments, and localizing its sub-events in time inside a different video of
+> the same concept.
 
 Project page: https://culturalmoment-benchmark.github.io/
 Paper: https://arxiv.org/abs/2608.23065 (arXiv:2608.23065)
@@ -74,5 +75,5 @@ https://culturalmoment-benchmark.github.io/
   url={https://arxiv.org/abs/2608.23065}
 }
 
-Accepted to the EMNLP 2026 Main Conference. This entry will be replaced by the
+Accepted to the EMNLP 2026 Main Conference as an Oral. This entry will be replaced by the
 ACL Anthology version once published.
